@@ -38,7 +38,10 @@ def startfile(filename):
     try:
         os.startfile(filename)
     except:
-        subprocess.Popen(['xdg-open', filename])
+        try:
+            subprocess.Popen(['xdg-open', filename])
+        except:
+            print('文件生成在output目录下')
 
 
 if len(sys.argv) < 2:
@@ -73,7 +76,7 @@ else:
 
 for d in os.listdir(tools_dir):
     level = d.split('.')[0]
-    if level.isnumeric() and int(level) >= 25:
+    if level.isdigit() and int(level) >= 25:
         tools_dir = os.path.join(tools_dir, d)
         break
 else:
