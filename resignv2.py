@@ -37,11 +37,18 @@ def mkdir(path):
 def startfile(filename):
     try:
         os.startfile(filename)
+        return
     except:
-        try:
-            subprocess.Popen(['xdg-open', filename])
-        except:
-            print('文件生成在output目录下')
+        pass
+    try:
+        subprocess.Popen(['open', filename])
+        return
+    except:
+        pass
+    try:
+        subprocess.Popen(['xdg-open', filename])
+    except:
+        pass
 
 
 if len(sys.argv) < 2:
@@ -124,5 +131,5 @@ if ret == 0 and out.endswith('Verification succesful'):
         # 删除中间生成文件
         os.remove(apk_tmp)
         if ret == 0:
-            print('v2签名并写渠道号成功！')
+            print('v2签名并写渠道号成功，文件生成在output目录下')
             startfile(output_dir)
